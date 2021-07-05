@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+'use strict'
+const path = require('path')
+const program = require('commander')
+const base = require('../package.json')
+
+program
+  .version(base.version)
+
+program
+  .command('start')
+  .option('-p, --port <port>', 'http server port')
+  .option('-H, --host <host>', 'port 80 & set local host')
+  .option('-B, --build <build>', 'build with true')
+  .option('-O, --open', '打开浏览器')
+  .description('启动服务器')
+  .action(options => {
+      if (options.config) {
+          setConfig(options.config)
+      }
+      require('../index')(options)
+  })
+
+// 开始解析用户输入的命令
+program.parse(process.argv)
